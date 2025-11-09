@@ -3,11 +3,10 @@ import numpy as np
 import plotly.express as px
 import ppscore as pps
 import seaborn as sns
-sns.set_style("whitegrid")
-
-
 from feature_engine.discretisation import ArbitraryDiscretiser
 from src.data_management import load_houses_data
+sns.set_style("whitegrid")
+
 
 def page_correlation_study_body():
     """
@@ -17,13 +16,18 @@ def page_correlation_study_body():
     df = load_houses_data()
 
     # List of variables to study in the analysis
-    vars_to_study = ['OverallQual','GrLivArea','GarageArea','TotalBsmtSF','1stFlrSF','YearBuilt']
+    vars_to_study = ['OverallQual', 'GrLivArea',
+                     'GarageArea', 'TotalBsmtSF',
+                     '1stFlrSF', 'YearBuilt']
 
-    st.write("### Correlation Study") # page title
+    st.write("### Correlation Study")
+
     # Display Business req 1
     st.info(
-        f"* **BR1** - The client is interested in discovering how house attributes correlate with sale prices.\
-        Therefore, the client expects data visualizations of the correlated variables against the sale price."
+        f"* **BR1** - The client is interested in discovering how house\
+        attributes correlate with sale prices.\
+        Therefore, the client expects data visualizations of the correlated\
+        variables against the sale price."
     )
 
     # displays checkbox revealing houses dataset
@@ -31,27 +35,36 @@ def page_correlation_study_body():
         st.write(
             f"* The dataset has {df.shape[0]} rows and {df.shape[1]} columns.\
             We show the first 10 rows below.\n"
-            f"* SalePrice is our target variable, and we want to identify features correlated to it.")
-        
+            f"* SalePrice is our target variable, and we want to identify\
+            features correlated to it.")
+
         st.write(df.head(10))
 
     st.write("---")
 
     # Correlation Study Summary
     st.write(
-        f"To learn more about the relationship between the variables and a property's sale price, we performed\
-        a correlation analysis in the notebook. This addresses the first business requirement (BR1) of the project.\n"
-        f"\n We found that the most correlated variable are:\n\n **{vars_to_study}**"
+        f"To learn more about the relationship between the variables and a\
+        property's sale price, we performed\
+        a correlation analysis in the notebook. This addresses the first\
+        business requirement (BR1) of the project.\n"
+        f"\n We found that the most correlated variable are:\n\n\
+        **{vars_to_study}**"
         )
-    
+
     # based on house market study notebook conclusions
     st.info(
-        f"After inspecting and visualising variables with the Target Variable we can come up with the following hypotheses:\n"
-        f"- Houses with higher overall material and finish quality **OverallQual** sell for higher prices.\n"
-        f"- Houses with larger above-ground living area **GrLivArea** have higher sale prices.\n"
-        f"- Houses with extra spaces get to a higher sale price, and here we can include **GarageArea, TotalBsmtSF,\
+        f"After inspecting and visualising variables with the Target\
+        Variable we can come up with the following hypotheses:\n"
+        f"- Houses with higher overall material and finish quality\
+        **OverallQual** sell for higher prices.\n"
+        f"- Houses with larger above-ground living area **GrLivArea**\
+        have higher sale prices.\n"
+        f"- Houses with extra spaces get to a higher sale price,\
+        and here we can include **GarageArea, TotalBsmtSF,\
         BsmtExposure, GarageFinish**.\n"
-        f"- Houses with a good kitchen quality **KitchenQual** have a good impact on the sale price."
+        f"- Houses with a good kitchen quality **KitchenQual**\
+        have a good impact on the sale price."
     )
 
     df_eda = df.filter(vars_to_study + ['SalePrice'])
@@ -67,7 +80,7 @@ def page_correlation_study_body():
         df_corr_pearson, df_corr_spearman, pps_matrix = (
             CalculateCorrAndPPS(df_eda))
         DisplayCorrAndPPS(df_corr_pearson, df_corr_spearman, pps_matrix,
-                        CorrThreshold=0.4, PPS_Threshold=0.2)
+                          CorrThreshold=0.4, PPS_Threshold=0.2)
 
     # Function to display scatter plots or categorical distribution plots
     def scatter_plot_for_eda(df, col, target_var):
@@ -76,8 +89,8 @@ def page_correlation_study_body():
         variable.
         """
         fig = px.scatter(df, x=col, y=target_var,
-                        title=f"Scatter Plot of {col} vs {target_var}",
-                        trendline="ols", trendline_color_override="red")
+                         title=f"Scatter Plot of {col} vs {target_var}",
+                         trendline="ols", trendline_color_override="red")
         st.plotly_chart(fig)
 
     def plot_categorical(df, col, target_var):
@@ -86,8 +99,8 @@ def page_correlation_study_body():
         target.
         """
         fig = px.histogram(df, x=col, color=target_var,
-                        title=f"Distribution of {col} vs {target_var}",
-                        barmode='stack')
+                           title=f"Distribution of {col} vs {target_var}",
+                           barmode='stack')
         fig.update_layout(xaxis_tickangle=-45)
         st.plotly_chart(fig)
 
@@ -114,7 +127,7 @@ def plot_target_hist(df, target_var):
     Function to plot a histogram for the target variable.
     """
     fig = px.histogram(df, x=target_var, marginal="box", nbins=50,
-                    title=f"Distribution of {target_var}")
+                       title=f"Distribution of {target_var}")
     st.plotly_chart(fig)
 
 
@@ -162,6 +175,8 @@ def heatmap_pps(df, threshold, figsize=(20, 12), font_annot=8):
         st.plotly_chart(fig)
 
 # Code Institute credits
+
+
 def CalculateCorrAndPPS(df):
     """
     Function to calculate both the Pearson and Spearman correlations as well as
@@ -179,28 +194,30 @@ def CalculateCorrAndPPS(df):
         columns='x', index='y', values='ppscore')
 
     # Display PPS statistics for values below 1
-    pps_score_stats = (pps_matrix_raw.query("ppscore < 1").filter(['ppscore'])
-                    .describe().T)
+    pps_score_stats = (pps_matrix_raw.query("ppscore < 1").
+                       filter(['ppscore']).describe().T)
     print(pps_score_stats.round(3))
 
     return df_corr_pearson, df_corr_spearman, pps_matrix
 
 # Code Indtitute credits
+
+
 def DisplayCorrAndPPS(df_corr_pearson, df_corr_spearman, pps_matrix,
-                    CorrThreshold, PPS_Threshold,
-                    figsize=(20, 12), font_annot=8):
+                      CorrThreshold, PPS_Threshold,
+                      figsize=(20, 12), font_annot=8):
     """
     Function to display both the correlation heatmap and the PPS heatmap.
     """
     # Display Pearson correlation heatmap
     heatmap_corr(df=df_corr_pearson, threshold=CorrThreshold,
-                title="Pearson Correlation Heatmap", figsize=figsize,
-                    font_annot=font_annot)
+                 title="Pearson Correlation Heatmap", figsize=figsize,
+                 font_annot=font_annot)
 
     # Display Spearman correlation heatmap
     heatmap_corr(df=df_corr_spearman, threshold=CorrThreshold,
-                title="Spearman Correlation Heatmap", figsize=figsize,
-                font_annot=font_annot)
+                 title="Spearman Correlation Heatmap", figsize=figsize,
+                 font_annot=font_annot)
 
     # Display PPS heatmap
     heatmap_pps(df=pps_matrix, threshold=PPS_Threshold, figsize=figsize,

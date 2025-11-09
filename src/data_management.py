@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import joblib
 
+
 # Caching ensures data is not reloaded unnecessarily in Streamlit
 @st.cache_data
 def load_houses_data():
@@ -12,13 +13,16 @@ def load_houses_data():
     df = pd.read_csv('outputs/datasets/collection/house_prices_records.csv')
     return df
 
+
 @st.cache_data
 def load_inherited_data():
     """
     Loads the 4 inherited houses data from a CSV file.
     """
-    df_inherited = pd.read_csv("outputs/datasets/collection/inherited_houses.csv")
+    df_inherited = pd.read_csv("outputs/datasets/collection\
+                            /inherited_houses.csv")
     return df_inherited
+
 
 def load_pkl_file(file_path):
     """
