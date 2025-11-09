@@ -11,10 +11,8 @@ def page_ml_predict_price_body():
     Displays ML pipeline, feature importance and ML and regression
     performance plots
     """
-    price_pipe = load_pkl_file(f"outputs/ml_pipeline/predict_price\
-    /v1/regression_pipeline.pkl")
-    price_feat_importance = plt.imread(f"outputs/ml_pipeline/predict_price\
-    /v1/features_importance.png")
+    price_pipe = load_pkl_file(f"outputs/ml_pipeline/predict_price/v1/regression_pipeline.pkl")
+    price_feat_importance = plt.imread(f"outputs/ml_pipeline/predict_price/v1/features_importance.png")
     X_train = pd.read_csv(f"outputs/ml_pipeline/predict_price/v1/X_train.csv")
     X_test = pd.read_csv(f"outputs/ml_pipeline/predict_price/v1/X_test.csv")
     y_train = pd.read_csv(f"outputs/ml_pipeline/predict_price/v1/y_train.csv")

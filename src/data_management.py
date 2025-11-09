@@ -19,8 +19,7 @@ def load_inherited_data():
     """
     Loads the 4 inherited houses data from a CSV file.
     """
-    df_inherited = pd.read_csv("outputs/datasets/collection\
-                            /inherited_houses.csv")
+    df_inherited = pd.read_csv("outputs/datasets/collection/inherited_houses.csv")
     return df_inherited
 
 

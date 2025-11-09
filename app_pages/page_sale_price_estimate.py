@@ -12,13 +12,9 @@ def page_predict_price_body():
     """
     version = 'v1'
 
-    regression_pipe = load_pkl_file(f"outputs/ml_pipeline\
-                                /predict_price/{version}\
-                                /regression_pipeline.pkl")
+    regression_pipe = load_pkl_file(f"outputs/ml_pipeline/predict_price/{version}/regression_pipeline.pkl")
 
-    house_features = (pd.read_csv(f"outputs/ml_pipeline\
-                                /predict_price/{version}\
-                                /X_train.csv").columns.to_list())
+    house_features = (pd.read_csv(f"outputs/ml_pipeline/predict_price/{version}/X_train.csv").columns.to_list())
 
     st.write("### Sales Price Estimate")
 
