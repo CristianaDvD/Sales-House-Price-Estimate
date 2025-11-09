@@ -38,7 +38,7 @@ def page_predict_price_body():
 	X_inherited = X_inherited.filter(house_features)
 	X_inherited['PredictedSalePrice'] = predicted_sale_price
 	st.write(X_inherited.head())
-	st.write(f"* Total price: **${total_price}** \n"
+	st.success(f"* Total price: **${total_price}** \n"
 	        f"* Features used: **{X_inherited.columns.to_list()[:-1]}**.\n"
 			f"\nWe were able to determine the entire value of the client's properties,\
 			thanks to the Machine Learning model's good prediction of the sale prices\

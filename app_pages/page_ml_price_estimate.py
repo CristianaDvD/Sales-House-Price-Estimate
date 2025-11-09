@@ -32,13 +32,13 @@ def page_ml_predict_price_body():
     st.write("---")
 
     # show pipeline steps
-    st.write("* ML pipeline to estimate sales prices of houses ")
+    st.write("#### ML pipeline to estimate sales prices of houses ")
     st.code(price_pipe)
     st.write("---")
 
     # show best features
     st.write("* The variables the model was trained and their importance")
-    st.write(X_train.columns.to_list())
+    st.write(['OverallQual', 'GrLivArea', 'TotalBsmtSF', 'GarageArea'])
     st.image(price_feat_importance)
     st.write("---")
 

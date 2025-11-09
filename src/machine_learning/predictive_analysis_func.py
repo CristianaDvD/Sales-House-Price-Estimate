@@ -10,10 +10,10 @@ def predict_price(X_live, house_features, price_pipeline):
 	price_prediction = price_pipeline.predict(X_live_price)
 	
 	statement = (
-			f"* The Sale Price of your house is: **${round(price_prediction[0])}**.\n\n"
+			f"* The Estimated Sale Price is: **${round(price_prediction[0])}**.\n\n"
 			)
 	
-	st.write(statement)
+	st.success(statement)
 
 
 def predict_inherited_house_price(X_inherited, house_features, price_pipeline):

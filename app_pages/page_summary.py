@@ -6,7 +6,7 @@ def page_summary_body():
     This includes an overview of the project, dataset details, business
     requirements, and additional resources like the README file.
     """
-    st.write("## Project Overview")
+    st.write("### Project Overview")
     
     # Credits for summary text to https://github.com/linobollansee
     st.info(
