@@ -1,5 +1,16 @@
 import streamlit as st
 from app_pages.multipage import MultiPage
+import os
+from kaggle.api.kaggle_api_extended import KaggleApi
+
+# Set the environment variables for Kaggle API
+os.environ['KAGGLE_USERNAME'] = os.getenv('KAGGLE_USERNAME')
+os.environ['KAGGLE_KEY'] = os.getenv('KAGGLE_KEY')
+
+# Authenticate
+api = KaggleApi()
+api.authenticate()
+
 
 # load pages scripts
 from app_pages.page_summary import page_summary_body
